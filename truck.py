@@ -1,6 +1,6 @@
 
 import sys
-debug = False
+debug = True
 # def biSearch(mapping, start, finish, x):
 #     if start == finish:
 #         return start
@@ -35,25 +35,25 @@ def main():
     numBoxes = int(lines[0])
     boxWeights = sorted([float(x) for x in lines[1].split()])
     truckCapacities = [float(x) for x in lines[2:]]
-    mapping = [sum(boxWeights[:i]) for i in range(len(boxWeights)+1)]
+    mapping = [sum(boxWeights[:i]) for i in range(numBoxes+1)]
 
     outputs = []
 
     for x in truckCapacities:
         #binary search
-        if x >= mapping[-1]: outputs.append(len(mapping)-1)
+        if x >= mapping[-1]: outputs.append(numBoxes)
         elif x==0: outputs.append(0)
         else:
-            lower = 0
-            upper = len(mapping)-1
-
-            outputs.append((biSearch(mapping, 0, len(mapping), x)))
+            outputs.append((biSearch(mapping, 0, numBoxes, x)))
     
     print(outputs)
 
+    with open(sys.argv[1].split('.')[0] + '.out','w') as outfile:
+        outfile.write("\n".join(map(str,outputs)))
+
     if debug == True:
-        print(lines)
-        print(numBoxes)
+        #print(lines)
+        #print(numBoxes)
         print(boxWeights)
         print(truckCapacities)
         print(mapping)
