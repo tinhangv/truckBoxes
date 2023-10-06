@@ -1,21 +1,32 @@
 
 import sys
-debug = True
+debug = False
+# def biSearch(mapping, start, finish, x):
+#     if start == finish:
+#         return start
+#     mid = int((start+finish)/2)
+#     if mapping[mid] > x:
+#         if mapping[mid-1]<x:
+#             return mid-1
+#         else:
+#             return biSearch(mapping, start, mid-1, x)
+#     elif mapping[mid] <x:
+#         if mapping[mid+1]>x:
+#             return mid+1
+#         else:
+#             return biSearch(mapping, mid+1, finish, x)
+#     else: return mid
+
 def biSearch(mapping, start, finish, x):
-    if start == finish:
+    if mapping[start]<=x and mapping[start+1]>=x:
         return start
     mid = int((start+finish)/2)
+    if(start==finish or mid==start): return -1
     if mapping[mid] > x:
-        if mapping[mid-1]<x:
-            return mid-1
-        else:
-            return biSearch(mapping, start, mid-1, x)
-    elif mapping[mid] <x:
-        if mapping[mid+1]>x:
-            return mid+1
-        else:
-            return biSearch(mapping, mid+1, finish, x)
-    else: return mid
+        return biSearch(mapping, start, mid, x)
+    elif mapping[mid] <= x:
+        return biSearch(mapping, mid, finish, x)
+
 def main():
     
     with open(sys.argv[1],'r') as infile:
