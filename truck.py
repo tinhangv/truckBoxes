@@ -1,15 +1,26 @@
 
 import sys
-debug = True
+debug = False
 
-def biSearch(mapping, start, finish, x):
-    if mapping[start]<= x <= mapping[start+1]:
-        return start
-    mid = int((start+finish)/2)
+# def biSearch(mapping, start, finish, x):
+#     if mapping[start]<= x <= mapping[start+1]:
+#         return start
+#     mid = int((start+finish)/2)
+#     if mapping[mid] > x:
+#         return biSearch(mapping, start, mid, x)
+#     elif mapping[mid] <= x:
+#         return biSearch(mapping, mid, finish, x)
+
+def biSearch(mapping, low, high, x):
+    if low >= high:
+        if x >= mapping[low]: return low
+        else: return low-1
+    mid = int((low+high)/2)
     if mapping[mid] > x:
-        return biSearch(mapping, start, mid, x)
-    elif mapping[mid] <= x:
-        return biSearch(mapping, mid, finish, x)
+        return biSearch(mapping, low, mid-1, x)
+    elif mapping[mid] < x:
+        return biSearch(mapping, mid+1, high, x)
+    else: return mid
 
 def main():
     
@@ -30,17 +41,20 @@ def main():
         else:
             outputs.append((biSearch(mapping, 0, numBoxes, x)))
     
-    print(outputs)
+    
 
     with open(sys.argv[1].split('.')[0] + '.out','w') as outfile:
         outfile.write("\n".join(map(str,outputs)))
 
-    if debug == True:
+    if debug:
         #print(lines)
         #print(numBoxes)
-        print(boxWeights)
-        print(truckCapacities)
-        print(mapping)
+        #print(boxWeights)
+        # print(truckCapacities)
+        # print(mapping)
+        # print(outputs)
+        #print ("done. total lines outputted: " + str(len(outputs)))
+        pass
             
 if __name__ == "__main__":
     main()
