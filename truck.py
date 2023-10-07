@@ -2,25 +2,27 @@
 import sys
 debug = False
 
-# def biSearch(mapping, start, finish, x):
-#     if mapping[start]<= x <= mapping[start+1]:
-#         return start
-#     mid = int((start+finish)/2)
-#     if mapping[mid] > x:
-#         return biSearch(mapping, start, mid, x)
-#     elif mapping[mid] <= x:
-#         return biSearch(mapping, mid, finish, x)
-
-def biSearch(mapping, low, high, x):
-    if low >= high:
-        if x >= mapping[low]: return low
-        else: return low-1
-    mid = int((low+high)/2)
+#this one might be easier to explain
+def biSearch(mapping, start, finish, x):
+    if mapping[start]<= x < mapping[start+1]:
+        return start
+    mid = int((start+finish)/2)
     if mapping[mid] > x:
-        return biSearch(mapping, low, mid-1, x)
+        return biSearch(mapping, start, mid, x)
     elif mapping[mid] < x:
-        return biSearch(mapping, mid+1, high, x)
+        return biSearch(mapping, mid, finish, x)
     else: return mid
+    
+# def biSearch(mapping, low, high, x):
+#     if low >= high:
+#         if x >= mapping[low]: return low
+#         else: return low-1
+#     mid = int((low+high)/2)
+#     if mapping[mid] > x:
+#         return biSearch(mapping, low, mid-1, x)
+#     elif mapping[mid] < x:
+#         return biSearch(mapping, mid+1, high, x)
+#     else: return mid
 
 def main():
     
@@ -41,8 +43,6 @@ def main():
         else:
             outputs.append((biSearch(mapping, 0, numBoxes, x)))
     
-    
-
     with open(sys.argv[1].split('.')[0] + '.out','w') as outfile:
         outfile.write("\n".join(map(str,outputs)))
 
